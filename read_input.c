@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:32:17 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/29 13:28:52 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/31 17:10:28 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,9 @@ void	save_instruction(t_info *info, t_fls *file, int fd)
 		i++;
 	}
 	// check_endline(fd);
-	split_labels(file, file->instr);
+	
 	split_lines(file, file->instr);
+	split_labels(file, file->instr);
 	if (i == 0)
 		print_errors(3);
 	// t_list *ptr = file->instr;
@@ -137,18 +138,18 @@ void	save_instruction(t_info *info, t_fls *file, int fd)
 int		save_file(t_info *info, int fd)
 {
 	t_fls	*file;
-	t_ptr	*ptr;
+	t_list	*ptr;
 	
 	file = (t_fls*)malloc(sizeof(t_fls));
 	*file = (t_fls){0, 0, NULL, NULL, NULL};
 	save_header(file, fd);
 	save_instruction(info, file, fd);
-	ptr = file->instr;
-	while (ptr)
-	{
-		check_instr(file, (char*)ptr->content, file->lbls);
-		ptr = ptr->next;
-	}
+	// ptr = file->instr;
+	// while (ptr)
+	// {
+	// 	check_instr(file, (char*)ptr->content, file->lbls);
+	// 	ptr = ptr->next;
+	// }
 	
 	// if (check_file(info, file))
 	// 	ft_lstadd(&(info->fl_lst), ft_lstnew(file, 0));

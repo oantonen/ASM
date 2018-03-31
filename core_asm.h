@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:30:09 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/29 13:23:32 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/31 17:55:17 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,26 @@
 #include <stdio.h>//
 #include <stdbool.h>
 
+typedef struct	s_err
+{
+	int 		line;
+	char 		token;
+	char 		err_type;
+	char 		*err_str;
+
+}				g_err;
+
 typedef struct  s_info
 {
 	bool		name;
 	bool		coom;
 	t_list		*fl_lst;
-
-
 }				t_info;
 
 typedef struct	s_lbl
 {
 	char 		*name;
-	t_list		*line;
+	t_spl		*instr;
 }				t_lbl;
 
 typedef struct  s_fls
@@ -42,11 +49,17 @@ typedef struct  s_fls
 	char		iscmnt;
 	char		*name;
 	char		*cmnt;
-	t_list		*lbls;
-	t_list		*lines;
-	t_list		*instr;
+	t_list		*lbls; /*list of labels with links to corresponding instructions 
+						(labels can be without instr-s) */
+
+	t_list		*lines; //for header
+	t_list		*instr; //other significant lines
+	t_list		*spltd; //lines splited into labels, instructions, arguments
 
 }				t_fls;
+
+g_err	rr_mng;
+char	is_err;
 
 # define COMMENT_CHAR			'#'
 # define LABEL_CHAR				':'
@@ -69,6 +82,6 @@ void	rotate_str(char *s, char *chars);
 bool	check_header(t_fls *file);
 void	split_labels(t_fls *file, t_list *instr);
 int		check_empty(char *str);
-
+void	split_lines(t_fls *file, t_list *instr);
 
 #endif
