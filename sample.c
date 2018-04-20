@@ -6,13 +6,14 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 22:01:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/29 13:20:48 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/20 14:37:14 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
+#include "op.h"
 
-t_op    op_tab[17] =
+	t_op    op_tab[17] =
 {
 	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},

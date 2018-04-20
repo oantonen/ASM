@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:18:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/31 17:57:57 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/20 20:00:46 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,25 @@ t_spl	*get_instr(t_list *spltd, int i)
 	return (NULL);
 }
 
-int 		check_lbl(char	*s)
+int 		check_lbl(char *s, int line)
 {
 	int 	i;
+	char	*s2;
 
 	i = 0;
 	// ft_printf("s=%s\n", s);
+	if (!ft_strchr(s, LABEL_CHAR))
+		return (0);
 	while (s[i] && s[i] != ' ' && s[i] != '\t')
 	{
-		// ft_printf("s=%s\n", s);
+		// ft_printf("s=%c\n", s[i]);
 		if (LABEL_CHAR == s[i] && i != 0)
 			return (i);
 		if (!ft_strchr(LABEL_CHARS, s[i]))
-			print_errors(31);
+		{
+			s2 = ft_strsub(s, 0, i + 1);
+			print_errors2(3, "[LABEL]", s2, line);
+		}
 		i++;
 	}
 	return (0);
@@ -58,7 +64,7 @@ int 		save_lbl(t_fls *file, char *str, t_list *instr)
 
 	lb1 = (t_lbl*)ft_memalloc(sizeof(t_lbl));
 	s = (char*)instr->content;
-	i = check_lbl(s);
+	i = check_lbl(s, file->line);
 	lb1->name = ft_strsub(s, 0, i);
 	if (!check_empty(&s[i + 1]))
 	{
@@ -67,7 +73,7 @@ int 		save_lbl(t_fls *file, char *str, t_list *instr)
 	}
 	else if (instr->next != NULL)
 	{
-		if (!check_lbl(instr->next->content))
+		if (!check_lbl(instr->next->content, file->line))
 		{
 			lb1->instr = get_instr(file->spltd, instr->next->content_size);
 			ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));
@@ -82,8 +88,10 @@ void	split_labels(t_fls *file, t_list *instr)
 {
 	while (instr)
 	{
-		if (check_lbl(instr->content))
+		if (check_lbl(instr->content, file->line) && !g_is_err)
 			save_lbl(file, instr->content, instr);
+		if (g_is_err)
+			return;
 		instr = instr->next;
 	}
 	t_list *ptr = file->lbls;

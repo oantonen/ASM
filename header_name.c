@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/31 17:27:12 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/20 21:03:58 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	write_name(t_fls *file, char *src, char *dst, int len) //без откры�
 	{
 		// ft_printf("srav2=%s\n", src);
 		file->isname = 1;
-		rotate_str(&src[++i], " \t");
+		inspect_str(&src[++i], " \t");
 	}
 	return (EXIT_SUCCESS);
 }
@@ -66,12 +66,12 @@ void	save_name(t_fls *file, t_list **ptr, char *str)
 	ft_printf("%s\n", file->name);
 }
 
-void	check_name(t_fls *file, t_list **ptr)
+void	check_name(t_fls *file, t_list **ptr, int i)
 {
 	char	*str;
 
 	if (file->isname)
-		print_errors(14);
+		print_errors2(1, "[COMMAND_NAME]", ".name", i);
 	str = (char*)(*ptr)->content;
 	while (*str)
 	{
@@ -90,14 +90,19 @@ void	check_name(t_fls *file, t_list **ptr)
 	}
 }
 
-void	check_hstr(t_fls *file, char *str)
+void	check_hstr(t_fls *file, char *str, int i)
 {
-	while (*str)
+	char	*c;
+
+	while (*str && !g_is_err)
 	{
 		if (*str == '#')
 			return ;
 		if (!ft_strchr(" \t\n", *str)) // "
-			print_errors(13);
+		{
+			c = ft_strsub(str, 0, 1);
+			print_errors2(3, "unexpected symbol", c, i);
+		}
 		str++;
 	}
 }
@@ -105,24 +110,24 @@ void	check_hstr(t_fls *file, char *str)
 bool	check_header(t_fls *file)
 {
 	t_list	*ptr;
+	int		i;
 
+	i = 1;
 	ptr = file->lines;
-	while (ptr)
+	while (ptr && !g_is_err)
 	{
-		// ft_printf("ptr2=%s\n", (char*)ptr->content);
 		if (ft_strstr((char*)ptr->content, NAME_CMD_STRING))
 		{
-			// ft_printf("ptr1=%s\n", (char*)ptr->content);
-			check_name(file, &ptr);
-			// ft_printf("ptr2=%s\n", (char*)ptr->content);
+			check_name(file, &ptr, i);
 		}
 		else if (ft_strstr((char*)ptr->content, COMMENT_CMD_STRING))
 		{
 			check_cmnt(file, &ptr);
 		}
 		else
-			check_hstr(file, (char*)ptr->content);
+			check_hstr(file, (char*)ptr->content, i);
 		ptr = ptr->next;
+		i++;
 	}
 	return (1);
 }

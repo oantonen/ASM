@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 13:20:44 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/18 21:57:17 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/20 20:43:42 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,14 @@ void	split_lines(t_fls *file, t_list *instr)
 		// ft_printf("%d\n", i++);
 		arg = ((t_spl*)ptr->content)->args;
 		s = ((t_spl*)ptr->content)->op_code;
+		// ft_printf("instr=%s\n", s);
+		if (s != NULL)
+			i++;
+
+			// print_errors(50);
 		// if (((t_spl*)ptr->content)->lbl)
 			// ft_printf("lbl=%s\n", ((t_spl*)ptr->content)->lbl);
-		ft_printf("instr=%s\n", s);
+		// ft_printf("instr=%s\n", s);
 		while (arg)
 		{
 			// ft_printf("arg=%s\n", (char*)arg->content);
@@ -112,6 +117,8 @@ void	split_lines(t_fls *file, t_list *instr)
 		}
 		ptr = ptr->next;
 	}
+	if (i == 0)
+		print_errors2(0, "No instruction was found", "END", file->line);
 	file->spltd = spl_i;
 }
 
