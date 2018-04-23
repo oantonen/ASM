@@ -6,74 +6,73 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/20 21:03:58 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/23 22:05:14 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
 
-bool	write_name(t_fls *file, char *src, char *dst, int len) //без открывающей кавычки
+void	write_name(t_fls *file, char *src, int *ii, int len_d) //без открывающей кавычки
 {
+	int		len_s;
 	int		i;
 
-	i = 0;
-	while (src[i] && src[i] != '"')
+	len_s = ft_strlen(src);
+	if (ft_strchr(src, '\"'))
+		len_s = ft_strchr(src, '\"') - src;
+	if (len_s + len_d <= PROG_NAME_LENGTH && ft_strchr(src, '\"'))
 	{
-		if (len == PROG_NAME_LENGTH)
-			print_errors(18);
-		dst[i] = src[len];
-		i++;
-		len++;
-	}
-	if (len == PROG_NAME_LENGTH && src[i] == '\0')
-		print_errors(18);
-	if (src[i] == '\0')
-		dst[len] = '\n';
-	if (src[i] == '"')
-	{
-		// ft_printf("srav2=%s\n", src);
+		ft_strncat(file->name, src, len_s);
 		file->isname = 1;
-		inspect_str(&src[++i], " \t");
+		inspect_str(&src[++len_s], " \t", ii);
 	}
-	return (EXIT_SUCCESS);
+	else if (len_s + len_d < PROG_NAME_LENGTH && !ft_strchr(src, '\"'))
+	{
+		ft_strncat(file->name, src, len_s);
+		ft_strcat(file->name, "\n");
+	}
+	else
+		print_errors2(1, "NAME", "name length exceeded, max 128", *ii);
 }
 
-void	save_name(t_fls *file, t_list **ptr, char *str)
+void	save_name(t_fls *file, t_list **ptr, char *str, int *i)
 {
-	if (!ft_strchr(str, '"'))
-		print_errors(16);
-	file->name = (char*)ft_memalloc(129);
-	while (*str != '"')
+	char	*c;
+
+	if (!ft_strchr(str, '\"'))
+		print_errors2(1, "NAME", "name not found", *i);
+	while (*str != '"' && !g_is_err)
 	{
 		if (*str == ' ' || *str == '\t')
 			str++;
 		else
-			print_errors(17);
+			print_errors2(3, "unexpected symbol", c = ft_strsub(str, 0, 1), *i);
 	}
-	write_name(file, str + 1, file->name, (int)ft_strlen(file->name));
+	write_name(file, str + 1, i, (int)ft_strlen(file->name));
 	if (file->isname == 0)
 		*ptr = (*ptr)->next;
-	if (file->isname == 0)
-		while (*ptr)//проверить экспериментально птр - НУЛЛ
+	if (file->isname == 0 && !g_is_err)
+		while (*ptr)
 		{
 			str = (char*)(*ptr)->content;
 			if (file->isname == 0)
-				write_name(file, str, file->name, (int)ft_strlen(file->name));
+				write_name(file, str, i, (int)ft_strlen(file->name));
 			if (ft_strchr(str, '"'))
 				break;
 			*ptr = (*ptr)->next;
+			i++;
 		}
 	ft_printf("%s\n", file->name);
 }
 
-void	check_name(t_fls *file, t_list **ptr, int i)
+void	check_name(t_fls *file, t_list **ptr, int *i)
 {
 	char	*str;
 
 	if (file->isname)
-		print_errors2(1, "[COMMAND_NAME]", ".name", i);
+		print_errors2(1, "[COMMAND_NAME]", ".name", *i);
 	str = (char*)(*ptr)->content;
-	while (*str)
+	while (*str && !g_is_err)
 	{
 		if (*str == ' ' || *str == '\t')
 			str++;
@@ -82,15 +81,18 @@ void	check_name(t_fls *file, t_list **ptr, int i)
 		else if (*str == '.' && !strncmp(str, NAME_CMD_STRING, 5))
 		{
 			// ft_printf("%s\n", str);
-			save_name(file, ptr, str + 5);
+			save_name(file, ptr, str + 5, i);
 			return ;
 		}
 		else
-			print_errors(15);
+		{
+			str = ft_strsub(str, 0, 1);
+			print_errors2(3, "unexpected symbol", str, *i);
+		}
 	}
 }
 
-void	check_hstr(t_fls *file, char *str, int i)
+void	check_hstr(t_fls *file, char *str, int *i)
 {
 	char	*c;
 
@@ -101,7 +103,7 @@ void	check_hstr(t_fls *file, char *str, int i)
 		if (!ft_strchr(" \t\n", *str)) // "
 		{
 			c = ft_strsub(str, 0, 1);
-			print_errors2(3, "unexpected symbol", c, i);
+			print_errors2(3, "unexpected symbol", c, *i);
 		}
 		str++;
 	}
@@ -113,19 +115,21 @@ bool	check_header(t_fls *file)
 	int		i;
 
 	i = 1;
+	file->name = (char*)ft_memalloc(PROG_NAME_LENGTH + 1);
 	ptr = file->lines;
 	while (ptr && !g_is_err)
 	{
 		if (ft_strstr((char*)ptr->content, NAME_CMD_STRING))
 		{
-			check_name(file, &ptr, i);
+			check_name(file, &ptr, &i);
 		}
 		else if (ft_strstr((char*)ptr->content, COMMENT_CMD_STRING))
 		{
-			check_cmnt(file, &ptr);
+			check_cmnt(file, &ptr, &i);
 		}
 		else
-			check_hstr(file, (char*)ptr->content, i);
+			check_hstr(file, (char*)ptr->content, &i);
+		// ft_printf("ptr=%p\n", ptr);
 		ptr = ptr->next;
 		i++;
 	}
