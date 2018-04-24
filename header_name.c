@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/23 22:05:14 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:54:53 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	write_name(t_fls *file, char *src, int *ii, int len_d) //без откры�
 	int		i;
 
 	len_s = ft_strlen(src);
+	if (g_is_err)
+		return;
 	if (ft_strchr(src, '\"'))
 		len_s = ft_strchr(src, '\"') - src;
 	if (len_s + len_d <= PROG_NAME_LENGTH && ft_strchr(src, '\"'))
@@ -46,7 +48,7 @@ void	save_name(t_fls *file, t_list **ptr, char *str, int *i)
 		if (*str == ' ' || *str == '\t')
 			str++;
 		else
-			print_errors2(3, "unexpected symbol", c = ft_strsub(str, 0, 1), *i);
+			print_errors2(4, "unexpected symbol1", c = ft_strsub(str, 0, 1), *i);
 	}
 	write_name(file, str + 1, i, (int)ft_strlen(file->name));
 	if (file->isname == 0)
@@ -80,14 +82,13 @@ void	check_name(t_fls *file, t_list **ptr, int *i)
 			return ;
 		else if (*str == '.' && !strncmp(str, NAME_CMD_STRING, 5))
 		{
-			// ft_printf("%s\n", str);
 			save_name(file, ptr, str + 5, i);
 			return ;
 		}
 		else
 		{
 			str = ft_strsub(str, 0, 1);
-			print_errors2(3, "unexpected symbol", str, *i);
+			print_errors2(4, "unexpected symbol", str, *i);
 		}
 	}
 }
@@ -100,7 +101,7 @@ void	check_hstr(t_fls *file, char *str, int *i)
 	{
 		if (*str == '#')
 			return ;
-		if (!ft_strchr(" \t\n", *str)) // "
+		if (!ft_strchr(" \t\n", *str))
 		{
 			c = ft_strsub(str, 0, 1);
 			print_errors2(3, "unexpected symbol", c, *i);
@@ -129,7 +130,6 @@ bool	check_header(t_fls *file)
 		}
 		else
 			check_hstr(file, (char*)ptr->content, &i);
-		// ft_printf("ptr=%p\n", ptr);
 		ptr = ptr->next;
 		i++;
 	}

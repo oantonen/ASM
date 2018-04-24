@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 18:36:59 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/23 22:06:52 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:56:14 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,13 @@ void	inspect_str(char *s, char *chars, int *ii)
 	}
 }
 
-void	write_cmnt(t_fls *file, char *src, int *ii, int len_d) //без открывающей кавычки
+void	write_cmnt(t_fls *file, char *src, int *ii, int len_d)
 {
-	// int		i;
-
-	// i = 0;
-	// while (src[i] && src[i] != '"')
-	// {
-	// 	if (len == COMMENT_LENGTH)
-	// 		print_errors(28);
-	// 	dst[len] = src[i];
-	// 	i++;
-	// 	len++;
-	// }
-	// // ft_printf("srav2=%d\n", src[i]);
-	// if (len == COMMENT_LENGTH && src[i] == '\0')
-	// 	print_errors(28);
-	// if (src[i] == '\0')
-	// 	dst[len] = '\n';
-	// if (src[i] == '"')
-	// {
-	// 	file->iscmnt = 1;
-	// 	inspect_str(&src[++i], " \t", 1);
-	// }
-
 	int		len_s;
 	int		i;
 
+	if (g_is_err)
+		return;
 	len_s = ft_strlen(src);
 	if (ft_strchr(src, '\"'))
 		len_s = ft_strchr(src, '\"') - src;
@@ -74,10 +54,7 @@ void	write_cmnt(t_fls *file, char *src, int *ii, int len_d) //без откры�
 		ft_strcat(file->cmnt, "\n");
 	}
 	else
-	{
 		print_errors2(1, "COMMENT", "comment length exceeded, max 2048", *ii);
-		// exit(0);
-	}
 }
 
 void    save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
@@ -85,14 +62,14 @@ void    save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
 	char	*c;
 
 	if (!ft_strchr(str, '"'))
-		print_errors(26);
+		print_errors2(1, "COMMENT", "comment not found", *i);
 	file->cmnt = (char*)ft_memalloc(COMMENT_LENGTH + 1);
-	while (*str != '"')
+	while (*str != '"' && !g_is_err)
 	{
 		if (*str == ' ' || *str == '\t')
 			str++;
 		else
-			print_errors(27);
+			print_errors2(5, "unexpected symbol", c = ft_strsub(str, 0, 1), *i);
 	}
 	write_cmnt(file, str + 1, i, (int)ft_strlen(file->cmnt));
 	if (file->iscmnt == 0 && !g_is_err)
@@ -119,7 +96,6 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 	str = (char*)(*ptr)->content;
 	while (*str && !g_is_err)
 	{
-		// ft_printf("srav=%d\n", strncmp(str, NAME_CMD_STRING, 5));
 		if (*str == ' ' || *str == '\t')
 			str++;
 		else if (*str == '#')
@@ -131,6 +107,9 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 			return ;
 		}
 		else
-			print_errors(25);
+		{
+			str = ft_strsub(str, 0, 1);
+			print_errors2(5, "unexpected symbol", str, *i);
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:32:17 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/20 20:59:26 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:53:49 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int	print_errors2(char err_type, char *token, char *err_str, int line)
 		err = "";
 	else if (err_type == 3)
 		err = "Lexical error ";
+	else if (err_type == 4)
+		err = "Lexical error at NAME ";
+	else if (err_type == 5)
+		err = "Lexical error at COMMENT ";
 	ft_printf("%s%s %s at line %d\n", err, token, err_str, line);
 	g_is_err = 1;
 	return (0);
@@ -73,32 +77,6 @@ int		check_empty(char *str)
 	return (1);
 }
 
-// void	check_endline(int fd)
-// {
-// 	char	*buf;
-// 	char	*big;
-// 	char	*del_big;
-
-// 	buf = (char*)ft_memalloc(101);
-// 	lseek(fd, 0L, 0);
-// 	big = NULL;
-// 	while (read(fd, buf, 100) > 0)
-// 	{
-// 		if (big == NULL)
-// 			big = ft_strdup(buf);
-// 		else
-// 		{
-// 			del_big = big;
-// 			big = ft_strjoin(big, buf);
-// 			ft_strdel(&del_big);
-// 		}
-// 		ft_bzero(buf, 100);
-// 	}	
-// 	buf = ft_strrchr(big, '\n');
-// 	if (!check_empty(buf + 1))
-// 		print_errors(4);
-// }
-
 void	save_instruction(t_info *info, t_fls *file, int fd)
 {
 	char	*first;
@@ -113,7 +91,6 @@ void	save_instruction(t_info *info, t_fls *file, int fd)
 		ft_strdel(&first);
 		i++;
 	}
-	// check_endline(fd);
 	if (i == 0 || !file->instr)
 		print_errors2(0, "No instruction was found", "END", file->line);
 	if (!g_is_err)

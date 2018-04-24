@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 13:58:36 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/20 20:03:34 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:49:00 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int 	identify_argtype(char *arg, t_list *lbls)
 	int 	nb;
 
 	nb = 0;
-	ft_printf("arg=%s\n", arg);
+	// ft_printf("arg=%s\n", arg);
 	if (arg[0] == 'r')
 	{
 		nb = ft_atoi(&arg[1]); //atoi+itoa

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:30:09 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/31 17:55:17 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:14:31 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@
 typedef struct	s_err
 {
 	int 		line;
-	char 		token;
-	char 		err_type;
+	char 		*token;
+	char 		*err_type;
 	char 		*err_str;
-
 }				g_err;
 
 typedef struct  s_info
@@ -55,11 +54,11 @@ typedef struct  s_fls
 	t_list		*lines; //for header
 	t_list		*instr; //other significant lines
 	t_list		*spltd; //lines splited into labels, instructions, arguments
-
+	int 		line;
 }				t_fls;
 
 g_err	rr_mng;
-char	is_err;
+char	g_is_err;
 
 # define COMMENT_CHAR			'#'
 # define LABEL_CHAR				':'
@@ -71,17 +70,20 @@ char	is_err;
 # define INIT_INFO				info = {0, 0, NULL};
 # define INIT_FILE				{0, 0, NULL, NULL, NULL, NULL};
 # define PROG_NAME_LENGTH       (128)
-# define COMMENT_LENGTH         (2048)
+# define COMMENT_LENGTH         (20)
 # define COREWAR_EXEC_MAGIC     0xea83f3
+# define REG_NUMBER				16
 
 
 int     save_file(t_info *info, int fd);
-void    check_cmnt(t_fls *file, t_list **ptr);
+void    check_cmnt(t_fls *file, t_list **ptr, int *i);
 void	print_errors(int err);
-void	rotate_str(char *s, char *chars);
+void	inspect_str(char *s, char *chars, int *ii);
 bool	check_header(t_fls *file);
 void	split_labels(t_fls *file, t_list *instr);
 int		check_empty(char *str);
 void	split_lines(t_fls *file, t_list *instr);
+int		check_instructions(t_fls *info, t_list *spltd, t_list *lbls);
+int		print_errors2(char err_type, char *token, char *err_str, int line);
 
 #endif
