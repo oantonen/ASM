@@ -1,8 +1,7 @@
 NAME := asm
 
 SRC := main.c read_input.c header_comment.c header_name.c labels.c split_lines.c \
- check_instructions.c 
- # sample.c
+ check_instructions.c  check_instructions2.c sample.c
 
 LIBHEAD := libft/includes
 
