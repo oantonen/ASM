@@ -6,13 +6,11 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 13:20:44 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/20 20:43:42 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/25 21:25:09 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
-
-// void	split_errors()
 
 void 	save_str(int type, char *str, int *k, t_spl *i_spl)
 {
@@ -45,13 +43,29 @@ void 	save_str(int type, char *str, int *k, t_spl *i_spl)
 	*k = 0;
 }
 
-int		token(char c, char *str, int k, t_spl *i_spl)//пропускает говно?
+int		token(char c, char *str, int k, t_spl *i_spl)
 {
 	if (c == LABEL_CHAR && i_spl->lbl == NULL)
 		return (1);
 	else if ((c == ' ' || c == '\t') && !i_spl->op_code && k != 0)
 		return (2);
 	return (0);
+}
+
+void	if_not_splitted(t_spl **i_spl, char *str)
+{
+	t_spl	*i_spl2;
+	int		i;
+
+	i_spl2 = *i_spl;
+	if (i_spl2->lbl == NULL && i_spl2->op_code == NULL)
+		i_spl2->op_code = str;
+	else if (i_spl2->lbl && i_spl2->op_code == NULL)
+	{
+		i = ft_strchr(str, ':') - str + 1;
+		if (!check_empty(&str[i]))
+			i_spl2->op_code = ft_strsub(str, i, ft_strlen(&str[i]));
+	}
 }
 
 void	split_cur_line(t_list **bgng, char *str, int ln_nb)
@@ -63,7 +77,6 @@ void	split_cur_line(t_list **bgng, char *str, int ln_nb)
 
 	i = 0;
 	k = 0;
-	// ft_printf("str=%s\n", str);
 	i_spl = (t_spl*)ft_memalloc(sizeof(t_spl));
 	i_spl->ln_nb = ln_nb;
 	while (str[i])
@@ -77,6 +90,7 @@ void	split_cur_line(t_list **bgng, char *str, int ln_nb)
 			break ;
 		i++;
 	}
+	if_not_splitted(&i_spl, str);
 	ft_list_push_back(bgng, ft_lstnew(i_spl, 0));
 }
 
@@ -84,37 +98,36 @@ void	split_lines(t_fls *file, t_list *instr)
 {
 	int 	i;
 	t_list	*spl_i;
+	t_list	*ptr;
+	char	*s;
 
 	spl_i = NULL;
 	i = 0;
 	while (instr)
 	{
-		// ft_printf("line=%s\n", (char*)instr->content);
 		split_cur_line(&spl_i, instr->content, instr->content_size);
 		instr = instr->next;
 	}
-	t_list *ptr = spl_i;
-	t_list *arg;
-	char *s;
-	i = 0;
+	ptr = spl_i;
+	// t_list *arg;
 	while (ptr)
 	{
 		// ft_printf("%d\n", i++);
-		arg = ((t_spl*)ptr->content)->args;
+		// arg = ((t_spl*)ptr->content)->args;
 		s = ((t_spl*)ptr->content)->op_code;
 		// ft_printf("instr=%s\n", s);
 		if (s != NULL)
 			i++;
-
-			// print_errors(50);
+		// if (!((t_spl*)ptr->content)->lbl && !((t_spl*)ptr->content)->op_code)
+			// print_errors2(6, "[INSTRUCTION]", s2, line);
 		// if (((t_spl*)ptr->content)->lbl)
 			// ft_printf("lbl=%s\n", ((t_spl*)ptr->content)->lbl);
 		// ft_printf("instr=%s\n", s);
-		while (arg)
-		{
+		// while (arg)
+		// {
 			// ft_printf("arg=%s\n", (char*)arg->content);
-			arg = arg->next;
-		}
+			// arg = arg->next;
+		// }
 		ptr = ptr->next;
 	}
 	if (i == 0)

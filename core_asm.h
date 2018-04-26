@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:30:09 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/24 12:14:31 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 12:42:42 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,6 @@ typedef struct	s_err
 	char 		*err_type;
 	char 		*err_str;
 }				g_err;
-
-typedef struct  s_info
-{
-	bool		name;
-	bool		coom;
-	t_list		*fl_lst;
-}				t_info;
-
-typedef struct	s_lbl
-{
-	char 		*name;
-	t_spl		*instr;
-}				t_lbl;
 
 typedef struct  s_fls
 {
@@ -75,15 +62,17 @@ char	g_is_err;
 # define REG_NUMBER				16
 
 
-int     save_file(t_info *info, int fd);
+int     save_file(t_list **fl_lst, t_list **fl_err, int fd);
 void    check_cmnt(t_fls *file, t_list **ptr, int *i);
 void	print_errors(int err);
 void	inspect_str(char *s, char *chars, int *ii);
-bool	check_header(t_fls *file);
+void	check_header(t_fls *file);
 void	split_labels(t_fls *file, t_list *instr);
 int		check_empty(char *str);
 void	split_lines(t_fls *file, t_list *instr);
 int		check_instructions(t_fls *info, t_list *spltd, t_list *lbls);
 int		print_errors2(char err_type, char *token, char *err_str, int line);
+void	asm_del_lst(t_list **begin);
+int		check_args(t_spl *line, t_list *args, char arg_type[3], t_list *lbls);
 
 #endif

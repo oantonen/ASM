@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:18:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/24 12:49:04 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/25 21:25:15 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int 		save_lbl(t_fls *file, char *str, t_list *instr)
 
 	lb1 = (t_lbl*)ft_memalloc(sizeof(t_lbl));
 	s = (char*)instr->content;
-	i = check_lbl(s, file->line);
+	i = check_lbl(s, instr->content_size);
 	lb1->name = ft_strsub(s, 0, i);
 	if (!check_empty(&s[i + 1]))
 	{
@@ -73,7 +73,7 @@ int 		save_lbl(t_fls *file, char *str, t_list *instr)
 	}
 	else if (instr->next != NULL)
 	{
-		if (!check_lbl(instr->next->content, file->line))
+		if (!check_lbl(instr->next->content, instr->content_size))
 		{
 			lb1->instr = get_instr(file->spltd, instr->next->content_size);
 			ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));
@@ -88,13 +88,13 @@ void	split_labels(t_fls *file, t_list *instr)
 {
 	while (instr)
 	{
-		if (check_lbl(instr->content, file->line) && !g_is_err)
+		if (check_lbl(instr->content, instr->content_size) && !g_is_err)
 			save_lbl(file, instr->content, instr);
 		if (g_is_err)
 			return;
 		instr = instr->next;
 	}
-	t_list *ptr = file->lbls;
+	// t_list *ptr = file->lbls;
 	// while (ptr)
 	// {
 	// 	ft_printf("lbl=%s: ", ((t_lbl*)ptr->content)->name);

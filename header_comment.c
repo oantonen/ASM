@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 18:36:59 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/24 12:56:14 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 12:45:03 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	write_cmnt(t_fls *file, char *src, int *ii, int len_d)
 	int		i;
 
 	if (g_is_err)
-		return;
+		return ;
 	len_s = ft_strlen(src);
 	if (ft_strchr(src, '\"'))
 		len_s = ft_strchr(src, '\"') - src;
@@ -57,7 +57,7 @@ void	write_cmnt(t_fls *file, char *src, int *ii, int len_d)
 		print_errors2(1, "COMMENT", "comment length exceeded, max 2048", *ii);
 }
 
-void    save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
+void	save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
 {
 	char	*c;
 
@@ -81,10 +81,10 @@ void    save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
 			if (file->iscmnt == 0)
 				write_cmnt(file, str, i, (int)ft_strlen(file->cmnt));
 			if (ft_strchr(str, '"'))
-				break;
+				break ;
 			*ptr = (*ptr)->next;
 		}
-	ft_printf("%s\n", file->cmnt);
+	// ft_printf("%s\n", file->cmnt);
 }
 
 void	check_cmnt(t_fls *file, t_list **ptr, int *i)
@@ -102,7 +102,6 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 			return ;
 		else if (*str == '.' && !strncmp(str, COMMENT_CMD_STRING, 8))
 		{
-			// ft_printf("%s\n", str);
 			save_cmnt(file, ptr, str + 8, i);
 			return ;
 		}

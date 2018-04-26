@@ -6,20 +6,20 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/24 12:54:53 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 12:44:59 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
 
-void	write_name(t_fls *file, char *src, int *ii, int len_d) //без открывающей кавычки
+void	write_name(t_fls *file, char *src, int *ii, int len_d)
 {
 	int		len_s;
 	int		i;
 
 	len_s = ft_strlen(src);
 	if (g_is_err)
-		return;
+		return ;
 	if (ft_strchr(src, '\"'))
 		len_s = ft_strchr(src, '\"') - src;
 	if (len_s + len_d <= PROG_NAME_LENGTH && ft_strchr(src, '\"'))
@@ -48,7 +48,7 @@ void	save_name(t_fls *file, t_list **ptr, char *str, int *i)
 		if (*str == ' ' || *str == '\t')
 			str++;
 		else
-			print_errors2(4, "unexpected symbol1", c = ft_strsub(str, 0, 1), *i);
+			print_errors2(4, "unexpected symbol", c = ft_strsub(str, 0, 1), *i);
 	}
 	write_name(file, str + 1, i, (int)ft_strlen(file->name));
 	if (file->isname == 0)
@@ -60,11 +60,11 @@ void	save_name(t_fls *file, t_list **ptr, char *str, int *i)
 			if (file->isname == 0)
 				write_name(file, str, i, (int)ft_strlen(file->name));
 			if (ft_strchr(str, '"'))
-				break;
+				break ;
 			*ptr = (*ptr)->next;
 			i++;
 		}
-	ft_printf("%s\n", file->name);
+	// ft_printf("%s\n", file->name);
 }
 
 void	check_name(t_fls *file, t_list **ptr, int *i)
@@ -110,7 +110,7 @@ void	check_hstr(t_fls *file, char *str, int *i)
 	}
 }
 
-bool	check_header(t_fls *file)
+void	check_header(t_fls *file)
 {
 	t_list	*ptr;
 	int		i;
@@ -133,5 +133,4 @@ bool	check_header(t_fls *file)
 		ptr = ptr->next;
 		i++;
 	}
-	return (1);
 }

@@ -1,38 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op.h                                               :+:      :+:    :+:   */
+/*   other.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/17 14:27:14 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 14:24:30 by oantonen         ###   ########.fr       */
+/*   Created: 2018/04/24 19:03:25 by oantonen          #+#    #+#             */
+/*   Updated: 2018/04/24 20:41:23 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OP_H
-# define OP_H
+#include "core_asm.h"
 
-# define T_REG	1
-# define T_DIR	2
-# define T_IND	4
-# define ISREG	((arg_type[i] >> 0) & 1U)
-# define ISDIR	((arg_type[i] ) & 2U)
-# define ISIND	((arg_type[i] ) & 4U)
-
-typedef struct	s_op
+void	print_errors(int err)
 {
-	char		*name;
-	char		q_arg;
-	char		arg_type[3];
-	char		op_code;
-	int			cycles;
-	char		*descr;
-	char		carry;
-	char		codage;
+	ft_printf("Error while reading. [%d]", err);
+	exit(1);
+}
 
-}				t_op;
-
-t_op	g_optab[17];
-
-#endif
