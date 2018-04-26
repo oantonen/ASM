@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 18:36:59 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 12:45:03 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 16:24:49 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 	char	*str;
 
 	if (file->iscmnt)
-		print_errors(24);
+		print_errors2(1, "COMMENT", "duplicated comment", *i);
 	str = (char*)(*ptr)->content;
 	while (*str && !g_is_err)
 	{
