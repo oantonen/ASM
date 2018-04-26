@@ -1,13 +1,13 @@
 NAME := asm
 
 SRC := main.c read_input.c header_comment.c header_name.c labels.c split_lines.c \
- check_instructions.c  check_instructions2.c sample.c
+ check_instructions.c check_instructions2.c
 
 LIBHEAD := libft/includes
 
 OBJ := $(SRC:.c=.o)
 
-CFLAGS := -Wall -Wextra -Werror -I $(HEADERS)
+CFLAGS := -Wall -Wextra -Werror -I$(LIBHEAD)
 
 LIBFT := libft/libftprintf.a
 
@@ -17,7 +17,7 @@ create_lib:
 	@make -C libft -j8
 
 $(NAME): $(OBJ)
-	@gcc -o $(NAME) $(OBJ) $(LIBFT)
+	@gcc -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) 
 	@echo "\033[1;32mHere is ASM :P"
 
 %.o: %.c

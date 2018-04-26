@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 16:03:47 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 14:20:04 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 18:04:03 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		check_read_input(t_list **fl_lst, t_list **fl_err, int ac, char **av)
 	{
 		fd = open(av[i], O_RDONLY);
 		if (fd < 0)
-			printf("Error while opening file \"%s\"\n", av[i]);
+			ft_printf("Error while opening file \"%s\"\n", av[i]);
 		else
 			return (save_file(fl_lst, fl_err, fd));
 		i++;

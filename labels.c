@@ -6,25 +6,41 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:18:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/25 21:25:15 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 18:10:52 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
 
+void	check_duplic(char *check_lbl, t_list *lbl_list, int line)
+{
+	char	*lbl;
+	t_list	*ptr;
+
+	ptr = lbl_list;
+	lbl = ((t_lbl*)ptr->content)->name;
+	while (ptr)
+	{
+		lbl = ((t_lbl*)ptr->content)->name;
+		if (ft_strequ(lbl, check_lbl))
+		{
+			print_errors2(1, "duplicate label", check_lbl, line);
+			break ;
+		}
+		ptr = ptr->next;
+	}
+}
+
 t_spl	*get_instr(t_list *spltd, int i)
 {
 	t_spl	*cur;
-	int 	line;
+	int		line;
 
 	while (spltd)
 	{
 		line = ((t_spl*)spltd->content)->ln_nb;
-		// ft_printf("line=%d\n", line);
-		// ft_printf("i=%d\n", i);
 		if (i == line)
 		{
-			// ft_printf("instr=%s\n", ((t_spl*)spltd->content)->instr);
 			return (spltd->content);
 		}
 		spltd = spltd->next;
@@ -32,18 +48,16 @@ t_spl	*get_instr(t_list *spltd, int i)
 	return (NULL);
 }
 
-int 		check_lbl(char *s, int line)
+int		check_lbl(char *s, int line)
 {
-	int 	i;
+	int		i;
 	char	*s2;
 
 	i = 0;
-	// ft_printf("s=%s\n", s);
 	if (!ft_strchr(s, LABEL_CHAR))
 		return (0);
 	while (s[i] && s[i] != ' ' && s[i] != '\t')
 	{
-		// ft_printf("s=%c\n", s[i]);
 		if (LABEL_CHAR == s[i] && i != 0)
 			return (i);
 		if (!ft_strchr(LABEL_CHARS, s[i]))
@@ -56,7 +70,7 @@ int 		check_lbl(char *s, int line)
 	return (0);
 }
 
-int 		save_lbl(t_fls *file, char *str, t_list *instr)
+void	save_lbl(t_fls *file, char *str, t_list *instr)
 {
 	t_lbl	*lb1;
 	int		i;
@@ -66,6 +80,8 @@ int 		save_lbl(t_fls *file, char *str, t_list *instr)
 	s = (char*)instr->content;
 	i = check_lbl(s, instr->content_size);
 	lb1->name = ft_strsub(s, 0, i);
+	if (file->lbls)
+		check_duplic(lb1->name, file->lbls, instr->content_size);
 	if (!check_empty(&s[i + 1]))
 	{
 		lb1->instr = get_instr(file->spltd, instr->content_size);
@@ -81,25 +97,20 @@ int 		save_lbl(t_fls *file, char *str, t_list *instr)
 	}
 	else
 		ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));
-	return (1);
 }
 
 void	split_labels(t_fls *file, t_list *instr)
 {
+	t_list	*ptr;
+	char	*lbl;
+
+	ptr = NULL;
 	while (instr)
 	{
 		if (check_lbl(instr->content, instr->content_size) && !g_is_err)
 			save_lbl(file, instr->content, instr);
 		if (g_is_err)
-			return;
+			return ;
 		instr = instr->next;
 	}
-	// t_list *ptr = file->lbls;
-	// while (ptr)
-	// {
-	// 	ft_printf("lbl=%s: ", ((t_lbl*)ptr->content)->name);
-	// 	if (((t_lbl*)ptr->content)->instr)
-	// 		ft_printf("%s\n", ((t_lbl*)ptr->content)->instr->instr);
-	// 	ptr = ptr->next;
-	// }
 }

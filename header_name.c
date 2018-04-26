@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 12:44:59 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 18:02:51 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	save_name(t_fls *file, t_list **ptr, char *str, int *i)
 			*ptr = (*ptr)->next;
 			i++;
 		}
-	// ft_printf("%s\n", file->name);
 }
 
 void	check_name(t_fls *file, t_list **ptr, int *i)

@@ -6,27 +6,23 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 13:20:44 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/25 21:25:09 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:54:11 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
 
-void 	save_str(int type, char *str, int *k, t_spl *i_spl)
+void	save_str(int type, char *str, int *k, t_spl *i_spl)
 {
-	char 	*s;
-	char 	**args;
+	char	*s;
+	char	**args;
 
 	if (type == 1)
 	{
-		// ft_printf("k=%d\n", *k);
-		// ft_printf("incom_str=%s\n", str);
 		i_spl->lbl = ft_strsub(str - *k + 1, 0, *k - 1);
 	}
 	else if (type == 2)
 	{
-		// ft_printf("k=%d\n", *k);
-		// ft_printf("incom_str=%s\n", str);
 		i_spl->op_code = ft_strsub(str - *k, 0, *k);
 		args = ft_strsplit(str, ',');
 		*k = 0;
@@ -70,9 +66,9 @@ void	if_not_splitted(t_spl **i_spl, char *str)
 
 void	split_cur_line(t_list **bgng, char *str, int ln_nb)
 {
-	int 	i;
-	int 	k;
-	int 	type;
+	int		i;
+	int		k;
+	int		type;
 	t_spl	*i_spl;
 
 	i = 0;
@@ -96,7 +92,7 @@ void	split_cur_line(t_list **bgng, char *str, int ln_nb)
 
 void	split_lines(t_fls *file, t_list *instr)
 {
-	int 	i;
+	int		i;
 	t_list	*spl_i;
 	t_list	*ptr;
 	char	*s;
@@ -109,36 +105,14 @@ void	split_lines(t_fls *file, t_list *instr)
 		instr = instr->next;
 	}
 	ptr = spl_i;
-	// t_list *arg;
 	while (ptr)
 	{
-		// ft_printf("%d\n", i++);
-		// arg = ((t_spl*)ptr->content)->args;
 		s = ((t_spl*)ptr->content)->op_code;
-		// ft_printf("instr=%s\n", s);
 		if (s != NULL)
 			i++;
-		// if (!((t_spl*)ptr->content)->lbl && !((t_spl*)ptr->content)->op_code)
-			// print_errors2(6, "[INSTRUCTION]", s2, line);
-		// if (((t_spl*)ptr->content)->lbl)
-			// ft_printf("lbl=%s\n", ((t_spl*)ptr->content)->lbl);
-		// ft_printf("instr=%s\n", s);
-		// while (arg)
-		// {
-			// ft_printf("arg=%s\n", (char*)arg->content);
-			// arg = arg->next;
-		// }
 		ptr = ptr->next;
 	}
 	if (i == 0)
 		print_errors2(0, "No instruction was found", "END", file->line);
 	file->spltd = spl_i;
 }
-
-
-
-
-
-
-
-

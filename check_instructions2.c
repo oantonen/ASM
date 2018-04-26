@@ -6,12 +6,11 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 20:56:18 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 14:21:07 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:49:31 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
-#include "op.h"
 
 int		check_indirect(char *arg, int type)
 {
@@ -54,7 +53,6 @@ int		identify_argtype(char *arg, t_list *lbls)
 	char	*tmp;
 
 	nb = 0;
-	// ft_printf("arg=%s\n", arg);
 	if (arg[0] == 'r')
 	{
 		nb = ft_atoi(&arg[1]);
@@ -70,23 +68,4 @@ int		identify_argtype(char *arg, t_list *lbls)
 	else if (ft_isdigit(arg[0]))
 		return (check_indirect(arg, 2));
 	return (0);
-}
-
-int		check_args(t_spl *line, t_list *args, char arg_type[3], t_list *lbls)
-{
-	t_list	*ptr;
-	int		arg;
-	int		i;
-
-	i = 0;
-	ptr = args;
-	while (ptr)
-	{
-		arg = identify_argtype((char*)ptr->content, lbls);
-		if (arg == 0 || (arg != ISREG && arg != ISDIR && arg != ISIND))
-			print_errors2(2, line->op_code, (char*)ptr->content, line->ln_nb);
-		ptr = ptr->next;
-		i++;
-	}
-	return (1);
 }
