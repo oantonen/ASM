@@ -21,7 +21,7 @@ $(NAME): $(OBJ)
 	@echo "\033[1;32mHere is ASM :P"
 
 %.o: %.c
-	@$(CC) -c -I$(LIBHEAD) -o $@ $<
+	@$(CC) -c $(CFLAGS) -I$(LIBHEAD) -o $@ $<
 
 clean:
 	@rm -rf $(OBJ)

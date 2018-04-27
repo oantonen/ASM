@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 13:20:44 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 17:54:11 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 19:32:53 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	save_str(int type, char *str, int *k, t_spl *i_spl)
 	*k = 0;
 }
 
-int		token(char c, char *str, int k, t_spl *i_spl)
+int		token(char c, int k, t_spl *i_spl)
 {
 	if (c == LABEL_CHAR && i_spl->lbl == NULL)
 		return (1);
@@ -79,7 +79,7 @@ void	split_cur_line(t_list **bgng, char *str, int ln_nb)
 	{
 		if (str[i] != ' ' && str[i] != '\t')
 			k++;
-		type = token(str[i], &str[i], k, i_spl);
+		type = token(str[i], k, i_spl);
 		if (type)
 			save_str(type, &str[i], &k, i_spl);
 		if (type == 2)

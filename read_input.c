@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:32:17 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 17:48:30 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 19:33:34 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	save_header(t_fls *file, int fd)
 int		save_file(t_list **fl_lst, t_list **fl_err, int fd)
 {
 	t_fls	*file;
-	t_list	*ptr;
 
 	file = (t_fls*)malloc(sizeof(t_fls));
 	g_is_err = 0;
@@ -94,7 +93,7 @@ int		save_file(t_list **fl_lst, t_list **fl_err, int fd)
 	if (g_is_err == 0)
 		save_instruction(file, fd);
 	if (g_is_err == 0)
-		check_instructions(file, file->spltd, file->lbls);
+		check_instructions(file->spltd, file->lbls);
 	if (g_is_err == 0)
 	{
 		ft_printf("%s\n", file->name);

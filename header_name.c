@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 18:02:51 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 19:28:59 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	write_name(t_fls *file, char *src, int *ii, int len_d)
 {
 	int		len_s;
-	int		i;
 
 	len_s = ft_strlen(src);
 	if (g_is_err)
@@ -92,7 +91,7 @@ void	check_name(t_fls *file, t_list **ptr, int *i)
 	}
 }
 
-void	check_hstr(t_fls *file, char *str, int *i)
+void	check_hstr(char *str, int *i)
 {
 	char	*c;
 
@@ -128,7 +127,7 @@ void	check_header(t_fls *file)
 			check_cmnt(file, &ptr, &i);
 		}
 		else
-			check_hstr(file, (char*)ptr->content, &i);
+			check_hstr((char*)ptr->content, &i);
 		ptr = ptr->next;
 		i++;
 	}

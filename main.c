@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 16:03:47 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 18:04:03 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 19:35:24 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		print_errors2(char err_type, char *token, char *err_str, int line)
 {
 	char	*err;
 
+	err = NULL;
 	if (err_type == 1)
 		err = "Syntax error at token ";
 	else if (err_type == 2)

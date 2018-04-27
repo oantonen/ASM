@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:18:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 18:10:52 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 19:31:16 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	check_duplic(char *check_lbl, t_list *lbl_list, int line)
 
 t_spl	*get_instr(t_list *spltd, int i)
 {
-	t_spl	*cur;
 	int		line;
 
 	while (spltd)
@@ -70,7 +69,7 @@ int		check_lbl(char *s, int line)
 	return (0);
 }
 
-void	save_lbl(t_fls *file, char *str, t_list *instr)
+void	save_lbl(t_fls *file, t_list *instr)
 {
 	t_lbl	*lb1;
 	int		i;
@@ -102,13 +101,12 @@ void	save_lbl(t_fls *file, char *str, t_list *instr)
 void	split_labels(t_fls *file, t_list *instr)
 {
 	t_list	*ptr;
-	char	*lbl;
 
 	ptr = NULL;
 	while (instr)
 	{
 		if (check_lbl(instr->content, instr->content_size) && !g_is_err)
-			save_lbl(file, instr->content, instr);
+			save_lbl(file, instr);
 		if (g_is_err)
 			return ;
 		instr = instr->next;

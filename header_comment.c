@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 18:36:59 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 18:03:14 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/04/26 19:20:42 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	inspect_str(char *s, char *chars, int *ii)
 void	write_cmnt(t_fls *file, char *src, int *ii, int len_d)
 {
 	int		len_s;
-	int		i;
 
 	if (g_is_err)
 		return ;
