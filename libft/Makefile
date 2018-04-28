@@ -1,43 +1,134 @@
-NAME := libftprintf.a
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: apakhomo <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/01/27 08:51:56 by apakhomo          #+#    #+#              #
+#    Updated: 2018/01/27 08:51:57 by apakhomo         ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
 
-LIBFT := ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c ft_memcmp.c ft_strlen.c \
-ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c ft_strncat.c ft_strlcat.c ft_strchr.c ft_strrchr.c \
-ft_strstr.c ft_strnstr.c ft_strcmp.c ft_strncmp.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
-ft_toupper.c ft_tolower.c ft_isprint.c ft_memalloc.c ft_memdel.c ft_strnew.c ft_strdel.c ft_strclr.c ft_striter.c \
-ft_striteri.c ft_strmap.c ft_strmapi.c ft_strequ.c ft_strnequ.c ft_strsub.c ft_strjoin.c ft_strtrim.c ft_strsplit.c \
-ft_itoa.c ft_putchar.c ft_putstr.c ft_putendl.c ft_putnbr.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_putnstr.c ft_itoa_base.c ft_nbrlen.c \
-ft_strrev.c ft_atoi_base.c ft_list_push_back.c ft_strchrlen.c get_next_line.c ft_abs.c
+NAME = libft.a
+FLAGS = -Wall -Wextra -Werror
+DIR_S = src
+DIR_O = temp
+HEADER = include
+SOURCES = ft_atoi.c\
+		ft_bzero.c\
+		ft_isalnum.c\
+		ft_isalpha.c\
+		ft_isascii.c\
+		ft_isdigit.c\
+		ft_isprint.c\
+		ft_itoa.c\
+		ft_memalloc.c\
+		ft_memccpy.c\
+		ft_memchr.c\
+		ft_memcmp.c\
+		ft_memcpy.c\
+		ft_memdel.c\
+		ft_memmove.c\
+		ft_memset.c\
+		ft_putchar.c\
+		ft_putchar_fd.c\
+		ft_putendl.c\
+		ft_putendl_fd.c\
+		ft_putnbr.c\
+		ft_putnbr_fd.c\
+		ft_putstr.c\
+		ft_putstr_fd.c\
+		ft_strcat.c\
+		ft_strchr.c\
+		ft_strclr.c\
+		ft_strcmp.c\
+		ft_strcpy.c\
+		ft_strdel.c\
+		ft_strdup.c\
+		ft_strequ.c\
+		ft_striter.c\
+		ft_striteri.c\
+		ft_strjoin.c\
+		ft_strjoin_free.c\
+		ft_strlcat.c\
+		ft_strlen.c\
+		ft_strmap.c\
+		ft_strmapi.c\
+		ft_strncat.c\
+		ft_strncmp.c\
+		ft_strncpy.c\
+		ft_strnequ.c\
+		ft_strnew.c\
+		ft_strnstr.c\
+		ft_strrchr.c\
+		ft_strsplit.c\
+		ft_strstr.c\
+		ft_strsub.c\
+		ft_strtrim.c\
+		ft_tolower.c\
+		ft_toupper.c\
+		ft_lstnew.c\
+		ft_lstdel.c\
+		ft_lstdelone.c\
+		ft_lstadd.c\
+		ft_lstiter.c\
+		ft_lstmap.c\
+		ft_swap.c\
+		ft_range.c\
+		ft_sqrt.c\
+		ft_iterative_power.c\
+		ft_recursive_power.c\
+		ft_split.c\
+		ft_print_hex.c\
+		ft_abs.c\
+		ft_atoi_base.c\
+		get_next_line.c\
+		pf_conversions.c\
+		pf_core.c\
+		pf_fordigits.c\
+		pf_ft_printf.c\
+		pf_manage.c\
+		pf_managecharandhex.c\
+		pf_managestrandperc.c\
+		pf_itoa.c\
+		pf_verify.c\
+		ft_testintstr.c\
+		ft_strtolower.c\
+		ft_print_charr.c\
+		ft_free_arr.c\
+		ft_check_hex.c\
+		ft_hex_to_ul.c\
+		ft_count_to_null.c\
+		ft_new_int_arr.c\
+		ft_new_char_arr.c\
+		ft_new_int_matrix.c\
+		ft_list_push_back.c
 
-PRINTF := ft_printf.c pf_putchar.c pf_putstr.c pf_putaddr.c pf_put_signed_nb.c  pf_support.c pf_put_unsigned_nb.c \
-pf_flag_mng.c pf_percent.c pf_put_float_f.c pf_float_support.c 
 
-SRCSLIBFT := $(addprefix src_libft/,$(LIBFT))
+SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
-SRCSPRINTF := $(addprefix src_printf/,$(PRINTF))
+OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
-SRCS := $(SRCSLIBFT) $(SRCSPRINTF)
-
-OBJS := $(SRCS:.c=.o)
-
-HEADERS := ./includes
-
-CFLAGS := -Wall -Wextra -Werror
-
-all: $(NAME) 
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rc $(NAME) $(OBJS)
-	@echo "Lib is ready, my Lord"
+	@ranlib $(NAME)
+	@echo "######## MAKELIB: DONE ##########"
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -c -o $@ $< -I $(HEADERS)
+$(DIR_O)/%.o: $(DIR_S)/%.c
+	@mkdir -p temp
+	@echo "## MAKELIB: LINKING" [ $@ ] " ###"
+	@gcc $(FLAGS) -I./$(HEADER) -o $@ -c $<
 
 clean:
-	@rm -rf $(OBJS)
+	@rm -f $(OBJS)
+	@rm -rf $(DIR_O)
+	@echo "### MAKELIB: REMOVE OBJ FILES ###"
 
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "Clearing all"
+	@rm -f $(NAME)
+	@echo "### MAKELIB: REMOVE BIN FILES ###"
 
 re: fclean all

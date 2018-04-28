@@ -1,33 +1,62 @@
-NAME := asm
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: apakhomo <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/11/07 20:34:52 by apakhomo          #+#    #+#              #
+#    Updated: 2017/11/07 20:34:54 by apakhomo         ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
 
-SRC := main.c read_input.c header_comment.c header_name.c labels.c split_lines.c \
- check_instructions.c check_instructions2.c
+NAME = asm
+CC = gcc 
+WWW = -Wall -Wextra -Werror 
 
-LIBHEAD := libft/includes
+SRC_NAME = 	main.c\
+			read_input.c\
+			header_comment.c\
+			header_name.c\
+			labels.c\
+			split_lines.c\
+			check_instructions.c\
+			check_instructions2.c
 
-OBJ := $(SRC:.c=.o)
+OBJ_NAME = $(SRC_NAME:%.c=%.o)
 
-CFLAGS := -Wall -Wextra -Werror -I$(LIBHEAD)
+OBJ = $(addprefix $(OBJ_DIR), $(OBJ_NAME))
+INC = -I$(INC_DIR)
 
-LIBFT := libft/libftprintf.a
+INC_DIR = include/
+LIB_DIR = libft/
+SRC_DIR = srcs/
+OBJ_DIR = obj/
 
-all: create_lib $(NAME)
-
-create_lib: 
-	@make -C libft -j8
+all: $(NAME)
 
 $(NAME): $(OBJ)
-	@gcc -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) 
-	@echo "\033[1;32mHere is ASM :P"
+	@make -C $(LIB_DIR) -j4 --silent
+	@echo "######### LIB CREATED #########"
+	@$(CC) -o $(NAME) $(OBJ) -L $(LIB_DIR) -lft
+	@echo "##### COMPILING FINISHED ######"
 
-%.o: %.c
-	@$(CC) -c $(CFLAGS) -I$(LIBHEAD) -o $@ $<
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "##### LINKING" [ $@ ] " #######"
+	@$(CC) $(WWW) -o $@ -c  $< $(INC)
 
 clean:
-	@rm -rf $(OBJ)
+	@make -C $(LIB_DIR) clean --silent
+	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
+	@echo "##### REMOVE OBJECT FILES #####"
 
 fclean: clean
-	@rm -rf $(NAME)
-	@make fclean -C libft
+	@make -C $(LIB_DIR) fclean --silent
+	@rm -f $(NAME)
+	@echo "##### REMOVE BINARY FILES #####"
 
 re: fclean all
+
+.PHONY: clean fclean all re
