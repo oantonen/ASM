@@ -87,4 +87,4 @@ live %1
 live %1
 live %1
 live %1
-zjmp 
+zjmp %:loop

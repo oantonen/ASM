@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:18:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/26 18:10:52 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/05 22:02:13 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,11 @@ void	save_lbl(t_fls *file, t_list *instr)
 		lb1->instr = get_instr(file->spltd, instr->content_size);
 		ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));
 	}
-	else if (instr->next != NULL)
+	else if (instr->next != NULL && !check_lbl(instr->next->content,
+		instr->content_size))
 	{
-		if (!check_lbl(instr->next->content, instr->content_size))
-		{
-			lb1->instr = get_instr(file->spltd, instr->next->content_size);
-			ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));
-		}
+		lb1->instr = get_instr(file->spltd, instr->next->content_size);
+		ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));
 	}
 	else
 		ft_list_push_back(&(file->lbls), ft_lstnew(lb1, 0));

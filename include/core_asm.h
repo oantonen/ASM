@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:30:09 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/28 11:17:43 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/05 22:11:13 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CORE_ASM_H
 # include "asm.h"
 # include "split_line.h"
+# include "op.h"
 
 typedef struct	s_fls
 {
@@ -21,17 +22,17 @@ typedef struct	s_fls
 	char		iscmnt;
 	char		*name;
 	char		*cmnt;
-	t_list		*lbls; /*list of labels with links to corresponding instructions
-						(labels can be without instr-s) */
-	t_list		*lines; //for header
-	t_list		*instr; //other significant lines
-	t_list		*spltd; //lines splited into labels, instructions, arguments
+	t_list		*lbls;
+	t_list		*lines;
+	t_list		*instr;
+	t_list		*spltd;
 	int			line;
 }				t_fls;
 
 char			g_is_err;
 
 # define COMMENT_CHAR			'#'
+# define COMMENT_CHAR2			';'
 # define LABEL_CHAR				':'
 # define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
@@ -57,6 +58,17 @@ int				check_instructions(t_list *spltd, t_list *lbls);
 int				print_errors2(char err_type, char *token, char *err_str,\
 	int line);
 void			asm_del_lst(t_list **begin);
-int				identify_argtype(char *arg, t_list *lbls, char **islbl, int *value);
+int				identify_argtype(char *arg, t_list *lbls,
+	char **islbl, int *value);
 
+void			cleaning_asm_lst(t_list **fl_lst, t_list **fl_err, t_asm *data);
+int				to_file(t_list **fl_lst, t_asm *data);
+
+void			cleaning_asm_lst_lst_spltd(t_spl *lst);
+void			cleaning_asm_lst_spltd(t_list *lst);
+void			cleaning_asm_lst_lines(t_list *lst);
+void			cleaning_asm_lst_lbls(t_list *lst);
+void			cleaning_asm_lst_instr(t_list *lst);
+void			read_tree(t_asmlst *file_lst,
+	t_spl *spl, t_list *tmp);
 #endif

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 18:36:59 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/27 16:57:35 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/05 22:14:05 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	inspect_str(char *s, char *chars, int *ii)
 	c = NULL;
 	while (s[i])
 	{
-		if (s[i] == '#')
+		if (s[i] == COMMENT_CHAR)
 			return ;
 		if (!ft_strchr(chars, s[i]))
 		{
@@ -96,7 +96,7 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 	{
 		if (*str == ' ' || *str == '\t')
 			str++;
-		else if (*str == '#')
+		else if (*str == COMMENT_CHAR)
 			return ;
 		else if (*str == '.' && !strncmp(str, COMMENT_CMD_STRING, 8))
 		{
