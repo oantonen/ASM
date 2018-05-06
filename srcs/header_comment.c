@@ -6,11 +6,20 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 18:36:59 by oantonen          #+#    #+#             */
-/*   Updated: 2018/05/05 22:14:05 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 15:25:04 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_asm.h"
+
+void	save_comment_err(int *i, char *str)
+{
+	char	*c;
+
+	c = NULL;
+	print_errors2(5, "unexpected symbol", c = ft_strsub(str, 0, 1), *i);
+	ft_strdel(&c);
+}
 
 void	inspect_str(char *s, char *chars, int *ii)
 {
@@ -21,12 +30,13 @@ void	inspect_str(char *s, char *chars, int *ii)
 	c = NULL;
 	while (s[i])
 	{
-		if (s[i] == COMMENT_CHAR)
+		if (s[i] == COMMENT_CHAR || s[i] == COMMENT_CHAR2)
 			return ;
 		if (!ft_strchr(chars, s[i]))
 		{
 			c = ft_strsub(&s[i], 0, 1);
 			print_errors2(3, "unexpected symbol", c, *ii);
+			ft_strdel(&c);
 		}
 		i++;
 	}
@@ -58,8 +68,6 @@ void	write_cmnt(t_fls *file, char *src, int *ii, int len_d)
 
 void	save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
 {
-	char	*c;
-
 	if (!ft_strchr(str, '"'))
 		print_errors2(1, "COMMENT", "comment not found", *i);
 	file->cmnt = (char*)ft_memalloc(COMMENT_LENGTH + 1);
@@ -68,7 +76,7 @@ void	save_cmnt(t_fls *file, t_list **ptr, char *str, int *i)
 		if (*str == ' ' || *str == '\t')
 			str++;
 		else
-			print_errors2(5, "unexpected symbol", c = ft_strsub(str, 0, 1), *i);
+			save_comment_err(i, str);
 	}
 	write_cmnt(file, str + 1, i, (int)ft_strlen(file->cmnt));
 	if (file->iscmnt == 0 && !g_is_err)
@@ -96,7 +104,7 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 	{
 		if (*str == ' ' || *str == '\t')
 			str++;
-		else if (*str == COMMENT_CHAR)
+		else if (*str == COMMENT_CHAR || *str == COMMENT_CHAR2)
 			return ;
 		else if (*str == '.' && !strncmp(str, COMMENT_CMD_STRING, 8))
 		{
@@ -107,6 +115,7 @@ void	check_cmnt(t_fls *file, t_list **ptr, int *i)
 		{
 			str = ft_strsub(str, 0, 1);
 			print_errors2(5, "unexpected symbol", str, *i);
+			ft_strdel(&str);
 		}
 	}
 }

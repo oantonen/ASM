@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_tree1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apakhomo <apakhomo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 16:03:47 by apakhomo          #+#    #+#             */
-/*   Updated: 2018/04/28 11:49:33 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 15:09:26 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int				print_errors2(char err_type, char *token,
 
 	err = NULL;
 	if (err_type == 1)
+	{
 		err = "Syntax error at token ";
+		ft_printf("%s%s \"%s\"\n", err, token, err_str);
+	}
 	else if (err_type == 2)
 		err = "Invalid argument for ";
 	else if (err_type == 0)
@@ -34,7 +37,8 @@ int				print_errors2(char err_type, char *token,
 		err = "Lexical error at COMMENT ";
 	else if (err_type == 6)
 		err = "Invalid instruction at token ";
-	ft_printf("%s%s \"%s\" at line %d\n", err, token, err_str, line);
+	if (err_type != 1)
+		ft_printf("%s%s \"%s\" at line %d\n", err, token, err_str, line);
 	g_is_err = 1;
 	return (0);
 }

@@ -7,13 +7,15 @@ Files example/barriere.cor and ./barriere.cor are identical
 [*] Done! 'example/Car.s' compiled to 'Car.cor'
 Writing output program to example/Car.cor
 Files example/Car.cor and ./Car.cor are identical
-Can't read source file example/championships/2014/bguy/sam_2.s
+[*] Done! 'example/championships/2014/bguy/sam_2.0.s' compiled to 'sam_2.0.cor'
+Writing output program to example/championships/2014/bguy/sam_2.0.cor
 Files example/championships/2014/bguy/sam_2.0.cor and ./sam_2.0.cor are identical
 [*] Done! 'example/championships/2014/bjacob/doge.s' compiled to 'doge.cor'
 Writing output program to example/championships/2014/bjacob/doge.cor
 Files example/championships/2014/bjacob/doge.cor and ./doge.cor are identical
-Lexical error unexpected symbol ";" at line 1
+[*] Done! 'example/championships/2014/brandazz/Rainbow_dash.s' compiled to 'Rainbow_dash.cor'
 Writing output program to example/championships/2014/brandazz/Rainbow_dash.cor
+Files example/championships/2014/brandazz/Rainbow_dash.cor and ./Rainbow_dash.cor are identical
 [*] Done! 'example/championships/2014/cdivry/youforkmytralala.s' compiled to 'youforkmytralala.cor'
 Writing output program to example/championships/2014/cdivry/youforkmytralala.cor
 Files example/championships/2014/cdivry/youforkmytralala.cor and ./youforkmytralala.cor are identical
@@ -92,17 +94,17 @@ Files example/championships/2014/sbuono/Asombra.cor and ./Asombra.cor are identi
 [*] Done! 'example/championships/2014/srabah-m/littlepuppy.s' compiled to 'littlepuppy.cor'
 Writing output program to example/championships/2014/srabah-m/littlepuppy.cor
 Files example/championships/2014/srabah-m/littlepuppy.cor and ./littlepuppy.cor are identical
-Lexical error unexpected symbol ";" at line 1
+[*] Done! 'example/championships/2014/tdemay/champ.s' compiled to 'champ.cor'
 Writing output program to example/championships/2014/tdemay/champ.cor
+Files example/championships/2014/tdemay/champ.cor and ./champ.cor are identical
 [*] Done! 'example/championships/2014/vrey/darksasuke.s' compiled to 'darksasuke.cor'
 Writing output program to example/championships/2014/vrey/darksasuke.cor
 Files example/championships/2014/vrey/darksasuke.cor and ./darksasuke.cor are identical
 [*] Done! 'example/championships/2014/ybouvet/casimir.s' compiled to 'casimir.cor'
 Writing output program to example/championships/2014/ybouvet/casimir.cor
 Files example/championships/2014/ybouvet/casimir.cor and ./casimir.cor are identical
-[*] Done! 'example/championships/2017/adenis/Explosive_Kitty.s' compiled to 'Explosive_Kitty.cor'
+Lexical error [LABEL] "zjmp%" at line 144
 Writing output program to example/championships/2017/adenis/Explosive_Kitty.cor
-Files example/championships/2017/adenis/Explosive_Kitty.cor and ./Explosive_Kitty.cor are identical
 Lexical error [LABEL] "fork%" at line 10
 Writing output program to example/championships/2017/agregoir/Kittystrophic.cor
 [*] Done! 'example/championships/2017/gnebie/ultima.s' compiled to 'ultima.cor'
@@ -114,9 +116,8 @@ Files example/championships/2017/iburel/gateau.cor and ./gateau.cor are identica
 [*] Done! 'example/championships/2017/jaustry/mise_a_jour_windows95.s' compiled to 'mise_a_jour_windows95.cor'
 Writing output program to example/championships/2017/jaustry/mise_a_jour_windows95.cor
 Files example/championships/2017/jaustry/mise_a_jour_windows95.cor and ./mise_a_jour_windows95.cor are identical
-[*] Done! 'example/championships/2017/nolivier/run_Kitty_RUN.s' compiled to 'run_Kitty_RUN.cor'
+Lexical error [LABEL] "fork%" at line 11
 Writing output program to example/championships/2017/nolivier/run_Kitty_RUN.cor
-Files example/championships/2017/nolivier/run_Kitty_RUN.cor and ./run_Kitty_RUN.cor are identical
 [*] Done! 'example/championships/2017/pzarmehr/overwatch.s' compiled to 'overwatch.cor'
 Writing output program to example/championships/2017/pzarmehr/overwatch.cor
 Files example/championships/2017/pzarmehr/overwatch.cor and ./overwatch.cor are identical
@@ -126,11 +127,11 @@ Files example/championships/2017/tbillard/Douceur_power.cor and ./Douceur_power.
 [*] Done! 'example/ex.s' compiled to 'ex.cor'
 Writing output program to example/ex.cor
 Files example/ex.cor and ./ex.cor are identical
-Invalid argument for sti "%1			;change live by the right value" at line 4
+[*] Done! 'example/examples/bee_gees.s' compiled to 'bee_gees.cor'
 Writing output program to example/examples/bee_gees.cor
-[*] Done! 'example/examples/bigzork.s' compiled to 'bigzork.cor'
-Writing output program to example/examples/bigzork.cor
-Files example/examples/bigzork.cor and ./bigzork.cor are identical
+Files example/examples/bee_gees.cor and ./bee_gees.cor are identical
+Syntax error at token [ARGUMENTS] "№ of args don't match"
+Syntax error at token [TOKEN][090:006] ENDLINE
 [*] Done! 'example/examples/fluttershy.s' compiled to 'fluttershy.cor'
 Writing output program to example/examples/fluttershy.cor
 Files example/examples/fluttershy.cor and ./fluttershy.cor are identical
@@ -152,7 +153,7 @@ Files example/Gagnant.cor and ./Gagnant.cor are identical
 [*] Done! 'example/jumper.s' compiled to 'jumper.cor'
 Writing output program to example/jumper.cor
 Files example/jumper.cor and ./jumper.cor are identical
-Syntax error at token [TOKEN] "incomplete header structure" at line 172
+Syntax error at token [TOKEN] "incomplete header structure"
 Syntax error at token [TOKEN][002:002] INSTRUCTION "ld"
 [*] Done! 'example/maxidef.s' compiled to 'maxidef.cor'
 Writing output program to example/maxidef.cor

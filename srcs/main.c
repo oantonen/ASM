@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 16:03:47 by apakhomo          #+#    #+#             */
-/*   Updated: 2018/05/05 22:32:20 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 15:23:12 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ int				main(int argc, char **argv)
 			ft_printf("[!] Error! with arg '%s' \n", *argv);
 		cleaning_asm(&data);
 	}
-	system("leaks -quiet asm");
+	// system("leaks -quiet asm");
 	return (0);
 }

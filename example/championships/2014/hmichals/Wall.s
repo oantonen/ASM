@@ -7,7 +7,7 @@ start:
 	st		r15, -8				#	15
 	
 stlive:
-	sti	    r1,	%:wall, %1		#	7
+	sti	    r1,	%:wall,	%1		#	7
 	sti		r1, %:alive, %1
 	sti		r1, %:forklive, %1
 	sti		r1, %:wallstart, %1

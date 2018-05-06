@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:32:17 by oantonen          #+#    #+#             */
-/*   Updated: 2018/04/28 11:33:44 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 15:07:53 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int		check_empty(char *str)
 {
 	char	*hash;
 
+	hash = NULL;
 	hash = ft_strchr(str, '#');
+	if (!hash)
+		hash = ft_strchr(str, ';');
 	if (hash)
 		*hash = '\0';
 	while (*str)

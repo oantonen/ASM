@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:18:38 by oantonen          #+#    #+#             */
-/*   Updated: 2018/05/05 22:02:13 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 15:03:44 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int		check_lbl(char *s, int line)
 		{
 			s2 = ft_strsub(s, 0, i + 1);
 			print_errors2(3, "[LABEL]", s2, line);
+			ft_strdel(&s2);
 		}
 		i++;
 	}

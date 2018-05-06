@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 20:56:18 by oantonen          #+#    #+#             */
-/*   Updated: 2018/05/05 22:30:50 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 14:35:56 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		check_value(char *arg, int type, int *value)
 		return (2);
 	else if (arg[i] == '\0' && type == 2)
 		return (4);
+	else if (arg[i] == '\0' && type == 3)
+		return (1);
 	return (0);
 }
 
@@ -77,22 +79,12 @@ int		check_direct(char *arg, t_list *lbls, char **islbl, int *value)
 
 int		identify_argtype(char *arg, t_list *lbls, char **islbl, int *value)
 {
-	int		nb;
-	char	*tmp;
-
-	nb = 0;
 	if (arg[0] == 'r')
 	{
-		nb = ft_atoi(&arg[1]);
-		tmp = ft_itoa(nb);
-		*value = nb;
-		if (nb >= 1 && nb <= REG_NUMBER && ft_strequ(&arg[1], tmp))
-		{
-			free(tmp);
-			return (1);
-		}
-		else
-			free(tmp);
+		*value = ft_atoi(&arg[1]);
+		if (check_value(&arg[1], 3, value) == 1)
+			if (*value >= 1 && *value <= REG_NUMBER)
+				return (1);
 	}
 	else if (arg[0] == DIRECT_CHAR)
 		return (check_direct(arg, lbls, islbl, value));

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:20:48 by oantonen          #+#    #+#             */
-/*   Updated: 2018/05/05 21:59:30 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/05/06 15:15:30 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_name(t_fls *file, t_list **ptr, int *i)
 	{
 		if (*str == ' ' || *str == '\t')
 			str++;
-		else if (*str == COMMENT_CHAR)
+		else if (*str == COMMENT_CHAR || *str == COMMENT_CHAR2)
 			return ;
 		else if (*str == '.' && !strncmp(str, NAME_CMD_STRING, 5))
 		{
@@ -97,12 +97,13 @@ void	check_hstr(char *str, int *i)
 
 	while (*str && !g_is_err)
 	{
-		if (*str == COMMENT_CHAR)
+		if (*str == COMMENT_CHAR || *str == COMMENT_CHAR2)
 			return ;
 		if (!ft_strchr(" \t\n", *str))
 		{
 			c = ft_strsub(str, 0, 1);
 			print_errors2(3, "unexpected symbol", c, *i);
+			ft_strdel(&c);
 		}
 		str++;
 	}

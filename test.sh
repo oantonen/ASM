@@ -11,8 +11,8 @@ diff -s example/barriere.cor ./barriere.cor
 ./asm example/Car.s
 ./orig_asm example/Car.s
 diff -s example/Car.cor ./Car.cor
-./asm example/championships/2014/bguy/sam_2.s
-./orig_asm example/championships/2014/bguy/sam_2.s
+./asm example/championships/2014/bguy/sam_2.0.s
+./orig_asm example/championships/2014/bguy/sam_2.0.s
 diff -s example/championships/2014/bguy/sam_2.0.cor ./sam_2.0.cor
 ./asm example/championships/2014/bjacob/doge.s
 ./orig_asm example/championships/2014/bjacob/doge.s
